@@ -412,4 +412,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3.5
-  leaser: {fileID: 3341405498189356112, guid: d22fd274afbd636448e08ed05f008907, type: 3}
+  _leaser: {fileID: 3341405498189356112, guid: d22fd274afbd636448e08ed05f008907, type: 3}
+  _fireRate: 0.15
+  _canFire: -1
