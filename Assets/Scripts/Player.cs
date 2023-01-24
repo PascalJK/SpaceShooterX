@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject _leaser;
     [SerializeField] float _fireRate = .15f;
     [SerializeField] float _canFire = -1f;
+    [SerializeField] int _health = 100;
 
     void Start()
     {
@@ -41,5 +42,14 @@ public class Player : MonoBehaviour
 
         var pos = new Vector3(transform.position.x, transform.position.y + .8f);
         Instantiate(_leaser, pos, Quaternion.identity);
+    }
+
+    public void DamageTaken()
+    {
+        _health -= 20;
+        if (_health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
