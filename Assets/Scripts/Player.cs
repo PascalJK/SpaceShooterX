@@ -50,6 +50,8 @@ public class Player : MonoBehaviour
         if (_health <= 0)
         {
             Destroy(gameObject);
+            FindObjectOfType<SpawnManager>().StopAllCoroutines();
+            print("Game Over");
         }
     }
 }

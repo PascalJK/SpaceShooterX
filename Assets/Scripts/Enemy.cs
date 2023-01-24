@@ -6,7 +6,6 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        transform.position = new Vector3(Random.Range(-11, 11), 0);
     }
 
     void Update()
@@ -15,8 +14,9 @@ public class Enemy : MonoBehaviour
 
         if (transform.position.y < -4.5f)
         {
-            var randX_Pos = Random.Range(-11, 11);
-            transform.position = new Vector3(randX_Pos, 7);
+            Destroy(gameObject);
+            /*var randX_Pos = Random.Range(-11, 11);
+            transform.position = new Vector3(randX_Pos, 7);*/
         }
     }
 
@@ -28,10 +28,15 @@ public class Enemy : MonoBehaviour
                 player.DamageTaken();
             Destroy(gameObject);
         }
-        else if(other.gameObject.CompareTag("leaser"))
+        else if(other.gameObject.CompareTag("Leaser"))
         {
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
+    }
+
+    private void OnDestroy()
+    {
+        FindObjectOfType<SpawnManager>().ReduceEnemyCount();
     }
 }
