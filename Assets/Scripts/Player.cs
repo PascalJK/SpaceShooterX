@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -24,7 +25,7 @@ public class Player : MonoBehaviour
             FireLeaser();
     }
 
-    private void CalculateMovment()
+    void CalculateMovment()
     {
         var horizontalInput = Input.GetAxis("Horizontal");
         var verticalInput = Input.GetAxis("Vertical");
@@ -39,7 +40,7 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(11, transform.position.y);
     }
 
-    private void FireLeaser()
+    void FireLeaser()
     {
         _canFire = Time.time + _fireRate;
 
@@ -60,5 +61,17 @@ public class Player : MonoBehaviour
             _spawnManager.OnPlayerDeath();
             Destroy(gameObject);
         }
+    }
+
+    public void ActivateTrippleShot()
+    {
+        _isTrippleShotEnabled = true;
+        StartCoroutine(TrippleShotCoroutine());
+    }
+
+    IEnumerator TrippleShotCoroutine()
+    {
+        yield return new WaitForSeconds(5);
+        _isTrippleShotEnabled = false;
     }
 }
