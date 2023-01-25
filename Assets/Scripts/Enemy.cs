@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     {
         transform.Translate(_speed * Time.deltaTime * Vector3.down);
 
-        if (transform.position.y < -4.5f)
+        if (transform.position.y < -6f)
         {
             Destroy(gameObject);
             /*var randX_Pos = Random.Range(-11, 11);
@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
@@ -28,15 +28,10 @@ public class Enemy : MonoBehaviour
                 player.DamageTaken();
             Destroy(gameObject);
         }
-        else if(other.gameObject.CompareTag("Leaser"))
+        else if(other.gameObject.CompareTag("Laser"))
         {
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
-    }
-
-    private void OnDestroy()
-    {
-        FindObjectOfType<SpawnManager>().ReduceEnemyCount();
     }
 }
