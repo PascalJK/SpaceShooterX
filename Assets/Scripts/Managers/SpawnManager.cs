@@ -17,7 +17,7 @@ public class SpawnManager : MonoBehaviour
     {
         while (!_isPlayerDead)
         { 
-            var pos = new Vector3(Random.Range(-11, 11), 7f);
+            var pos = new Vector3(Random.Range(-9.30f, 9.30f), 7f);
             var enemy = Instantiate(_enemyPrefab, pos, Quaternion.identity);
             enemy.transform.parent = _enemyContainer.transform;
             yield return new WaitForSeconds(.5f);
@@ -28,7 +28,7 @@ public class SpawnManager : MonoBehaviour
     {
         while (!_isPlayerDead)
         {
-            var pos = new Vector3(Random.Range(-11, 11), 7f);
+            var pos = new Vector3(Random.Range(-9f, 9f), 7f);
             yield return new WaitForSeconds(Random.Range(5, 15));
             Instantiate(_trippleShotPowerupPrefab, pos, Quaternion.identity);
         }

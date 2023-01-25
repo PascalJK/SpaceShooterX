@@ -4,10 +4,6 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] float _speed = 4f;
 
-    void Start()
-    {
-    }
-
     void Update()
     {
         transform.Translate(_speed * Time.deltaTime * Vector3.down);

@@ -65,12 +65,12 @@ public class Player : MonoBehaviour
 
     public void ActivateTrippleShot()
     {
-        _isTrippleShotEnabled = true;
         StartCoroutine(TrippleShotCoroutine());
     }
 
     IEnumerator TrippleShotCoroutine()
     {
+        _isTrippleShotEnabled = true;
         yield return new WaitForSeconds(5);
         _isTrippleShotEnabled = false;
     }
