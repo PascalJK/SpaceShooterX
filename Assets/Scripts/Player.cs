@@ -4,12 +4,14 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] float _speed = 3.5f;
-    [SerializeField] GameObject _leaser, _multiLeaser;
+    [SerializeField] GameObject _leaser, _multiLeaser, _shield;
     [SerializeField] float _fireRate = .15f;
     [SerializeField] float _canFire = -1f;
     [SerializeField] int _health = 100;
+    [SerializeField] float _speedMultiplier = 2f;
+
     bool _isTrippleShotEnabled;
-    private SpawnManager _spawnManager;
+    SpawnManager _spawnManager;
 
     void Start()
     {
@@ -55,6 +57,13 @@ public class Player : MonoBehaviour
 
     public void DamageTaken()
     {
+        if(_shield.activeInHierarchy)
+        {
+            _shield.SetActive(false);
+            Debug.Log("shield active");
+            return;
+        }
+
         _health -= 20;
         if (_health <= 0)
         {
@@ -63,9 +72,19 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ActivateTrippleShot()
+    public void ActivateTrippleShotPowerup()
     {
         StartCoroutine(TrippleShotCoroutine());
+    }
+
+    public void ActivateSpeedPowerup()
+    {
+        StartCoroutine(SpeedBoostCoroutine());
+    }
+
+    public void ActivateShieldPowerup()
+    {
+        _shield.SetActive(true);
     }
 
     IEnumerator TrippleShotCoroutine()
@@ -73,5 +92,12 @@ public class Player : MonoBehaviour
         _isTrippleShotEnabled = true;
         yield return new WaitForSeconds(5);
         _isTrippleShotEnabled = false;
+    }
+
+    IEnumerator SpeedBoostCoroutine()
+    {
+        _speed *= _speedMultiplier;
+        yield return new WaitForSeconds(10);
+        _speed /= _speedMultiplier;
     }
 }

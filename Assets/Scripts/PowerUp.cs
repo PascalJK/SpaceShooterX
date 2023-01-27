@@ -3,6 +3,7 @@ using UnityEngine;
 public class PowerUp : MonoBehaviour
 {
     [SerializeField] float _speed = 3;
+    [SerializeField] string _powerupName;
     Player _player;
 
     void Start()
@@ -19,7 +20,20 @@ public class PowerUp : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            _player.ActivateTrippleShot();
+            switch (_powerupName)
+            {
+                case "trippleShot":
+                    _player.ActivateTrippleShotPowerup();
+                    break;
+                case "speedBoost":
+                    _player.ActivateSpeedPowerup();
+                    break;
+                case "shieldPowerup":
+                    _player.ActivateShieldPowerup();
+                    break;
+                default:
+                    return;
+            }
             Destroy(gameObject);
         }
     }
