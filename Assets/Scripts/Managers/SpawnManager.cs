@@ -45,5 +45,6 @@ public class SpawnManager : MonoBehaviour
     public void OnPlayerDeath()
     {
         _isPlayerDead = true;
+        StopAllCoroutines();
     }
 }

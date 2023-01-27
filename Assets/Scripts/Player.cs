@@ -7,16 +7,19 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject _leaser, _multiLeaser, _shield;
     [SerializeField] float _fireRate = .15f;
     [SerializeField] float _canFire = -1f;
-    [SerializeField] int _health = 100;
+    [SerializeField] int _health = 3;
     [SerializeField] float _speedMultiplier = 2f;
 
     bool _isTrippleShotEnabled;
+    int _score;
     SpawnManager _spawnManager;
+    UiManager _uiManager;
 
     void Start()
     {
         transform.position = Vector3.zero;
         _spawnManager = FindObjectOfType<SpawnManager>();
+        _uiManager = FindObjectOfType<UiManager>();
     }
 
     void Update()
@@ -60,11 +63,12 @@ public class Player : MonoBehaviour
         if(_shield.activeInHierarchy)
         {
             _shield.SetActive(false);
-            Debug.Log("shield active");
             return;
         }
 
-        _health -= 20;
+        _health -= 1;
+        _uiManager.UpdateLivesSprive(_health);
+
         if (_health <= 0)
         {
             _spawnManager.OnPlayerDeath();
@@ -72,6 +76,13 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void AddScore()
+    {
+        _score += 10;
+        _uiManager.UpdateScore(_score);
+    }
+
+    #region Powerups
     public void ActivateTrippleShotPowerup()
     {
         StartCoroutine(TrippleShotCoroutine());
@@ -85,7 +96,7 @@ public class Player : MonoBehaviour
     public void ActivateShieldPowerup()
     {
         _shield.SetActive(true);
-    }
+    } 
 
     IEnumerator TrippleShotCoroutine()
     {
@@ -100,4 +111,5 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(10);
         _speed /= _speedMultiplier;
     }
+    #endregion
 }
