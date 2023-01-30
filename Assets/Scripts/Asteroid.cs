@@ -4,6 +4,7 @@ public class Asteroid : MonoBehaviour
 {
     [SerializeField] float _rotationSpeed = 3f;
     [SerializeField] GameObject _explosion;
+    [SerializeField] SpawnManager _spawnManager;
 
     void Update()
     {
@@ -16,6 +17,7 @@ public class Asteroid : MonoBehaviour
         {
             Instantiate(_explosion, transform.position, Quaternion.identity);
             Destroy(other.gameObject);
+            _spawnManager.StartSpawning();
             Destroy(gameObject, .25f);
         }
     }

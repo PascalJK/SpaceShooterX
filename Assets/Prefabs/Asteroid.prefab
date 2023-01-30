@@ -100,6 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationSpeed: 3
+  _explosion: {fileID: 6449969470776500680, guid: 70267a76b8ceb694a9a32d524ec52a39, type: 3}
+  _spawnManager: {fileID: 0}
 --- !u!58 &1543605017818619495
 CircleCollider2D:
   m_ObjectHideFlags: 0

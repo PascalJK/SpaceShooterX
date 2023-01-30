@@ -6,10 +6,11 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField] GameObject _enemyPrefab, _enemyContainer;
     [SerializeField] List<GameObject> _powerups;
+    [SerializeField] float _enemySpawnWaitTime = .5f;
 
     bool _isPlayerDead;
 
-    void Start()
+    public void StartSpawning()
     {
         StartCoroutine(SpawnEmemyRoutine());
         StartCoroutine(SpawnRandomPowerupRoutine());
@@ -24,16 +25,20 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnEmemyRoutine()
     {
+        yield return new WaitForSeconds(3f);
+
         while (!_isPlayerDead)
         { 
             var enemy = Instantiate(_enemyPrefab, SpawnPosition(), Quaternion.identity);
             enemy.transform.parent = _enemyContainer.transform;
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(_enemySpawnWaitTime);
         }
     }
 
     IEnumerator SpawnRandomPowerupRoutine()
     {
+        yield return new WaitForSeconds(3f);
+
         while (!_isPlayerDead)
         {
             var powerup = _powerups[Random.Range(0, _powerups.Count)];
