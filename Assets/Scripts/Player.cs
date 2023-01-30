@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] float _speed = 3.5f;
     [SerializeField] GameObject _leaser, _multiLeaser, _shield;
+    [SerializeField] GameObject _rightEngine, _leftEngine;
     [SerializeField] float _fireRate = .15f;
     [SerializeField] float _canFire = -1f;
     [SerializeField] int _health = 3;
@@ -55,12 +56,12 @@ public class Player : MonoBehaviour
             Instantiate(_multiLeaser, transform.position, Quaternion.identity);
             return;
         }
-        Instantiate(_leaser, pos, Quaternion.identity); 
+        Instantiate(_leaser, pos, Quaternion.identity);
     }
 
     public void DamageTaken()
     {
-        if(_shield.activeInHierarchy)
+        if (_shield.activeInHierarchy)
         {
             _shield.SetActive(false);
             return;
@@ -69,10 +70,21 @@ public class Player : MonoBehaviour
         _health -= 1;
         _uiManager.UpdateLivesSprive(_health);
 
-        if (_health <= 0)
+
+        switch (_health)
         {
-            _spawnManager.OnPlayerDeath();
-            Destroy(gameObject);
+            case 2:
+                _rightEngine.SetActive(true);
+                break;
+            case 1:
+                _leftEngine.SetActive(true);
+                break;
+            case 0:
+                _spawnManager.OnPlayerDeath();
+                Destroy(gameObject);
+                break;
+            default:
+                break;
         }
     }
 
@@ -96,7 +108,7 @@ public class Player : MonoBehaviour
     public void ActivateShieldPowerup()
     {
         _shield.SetActive(true);
-    } 
+    }
 
     IEnumerator TrippleShotCoroutine()
     {
