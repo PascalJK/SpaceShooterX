@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] GameObject _enemyPrefab, _enemyContainer;
+    [SerializeField] GameObject _powerupAudio, _explosionAudio;
     [SerializeField] List<GameObject> _powerups;
     [SerializeField] float _enemySpawnWaitTime = .5f;
 
@@ -42,7 +43,7 @@ public class SpawnManager : MonoBehaviour
         while (!_isPlayerDead)
         {
             var powerup = _powerups[Random.Range(0, _powerups.Count)];
-            yield return new WaitForSeconds(Random.Range(5, 20));
+            yield return new WaitForSeconds(Random.Range(5, 6));
             Instantiate(powerup, SpawnPosition(), Quaternion.identity);
         }
     }
@@ -50,6 +51,19 @@ public class SpawnManager : MonoBehaviour
     public void OnPlayerDeath()
     {
         _isPlayerDead = true;
+        ExplosionAudio();
         StopAllCoroutines();
+    }
+
+    public void ExplosionAudio()
+    {
+        var obj = Instantiate(_explosionAudio);
+        Destroy(obj, 2f);
+    }
+
+    public void PowerupAudio()
+    {
+        var obj = Instantiate(_powerupAudio);
+        Destroy(obj, 2f);
     }
 }

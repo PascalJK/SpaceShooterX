@@ -21,6 +21,7 @@ public class Asteroid : MonoBehaviour
             isDestroying = true;
             Instantiate(_explosion, transform.position, Quaternion.identity);
             Destroy(other.gameObject);
+            _spawnManager.ExplosionAudio();
             _spawnManager.StartSpawning();
             Destroy(gameObject, .25f);
         }

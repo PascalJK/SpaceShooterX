@@ -4,11 +4,14 @@ public class PowerUp : MonoBehaviour
 {
     [SerializeField] float _speed = 3;
     [SerializeField] string _powerupName;
+
     Player _player;
+    SpawnManager _spawnManager;
 
     void Start()
     {
         _player = FindObjectOfType<Player>();
+        _spawnManager = FindObjectOfType<SpawnManager>();
     }
 
     void Update()
@@ -34,6 +37,7 @@ public class PowerUp : MonoBehaviour
                 default:
                     return;
             }
+            _spawnManager.PowerupAudio();
             Destroy(gameObject);
         }
     }

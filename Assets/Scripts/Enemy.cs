@@ -3,14 +3,17 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] float _speed = 4f;
+    readonly float _destroyEnemyWaitTime = 2.8f;
 
     Player _player;
     Animator _animator;
+    SpawnManager _spawnManager;
 
     void Start()
     {
-        _player = GameObject.Find("Player").GetComponent<Player>();
+        _player = GameObject.Find(nameof(Player)).GetComponent<Player>();
         _animator = gameObject.GetComponent<Animator>();
+        _spawnManager = GameObject.Find(nameof(SpawnManager)).GetComponent<SpawnManager>();
     }
 
     void Update()
@@ -31,10 +34,7 @@ public class Enemy : MonoBehaviour
         {
             if (other.TryGetComponent<Player>(out var player))
                 player.DamageTaken();
-
-            _animator.SetTrigger("OnEnemyDeath");
-            _speed = 0.1f;
-            Destroy(gameObject, 2.8f);
+            DestroyEnemyShip();
         }
         else if (other.gameObject.CompareTag("Laser"))
         {
@@ -42,10 +42,15 @@ public class Enemy : MonoBehaviour
 
             if (_player != null)
                 _player.AddScore();
-
-            _animator.SetTrigger("OnEnemyDeath");
-            _speed = 0.1f;
-            Destroy(gameObject, 2.8f);
+            DestroyEnemyShip();
         }
+    }
+
+    void DestroyEnemyShip()
+    {
+        _animator.SetTrigger("OnEnemyDeath");
+        _spawnManager.ExplosionAudio();
+        _speed = 0;
+        Destroy(gameObject, _destroyEnemyWaitTime);
     }
 }

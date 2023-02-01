@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
 
     bool _isTrippleShotEnabled;
     int _score;
+
     SpawnManager _spawnManager;
     UiManager _uiManager;
 
@@ -85,7 +86,6 @@ public class Player : MonoBehaviour
 
         _health -= 1;
         _uiManager.UpdateLivesSprive(_health);
-
 
         switch (_health)
         {
