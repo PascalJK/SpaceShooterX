@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
     [SerializeField] int _health = 3;
     [SerializeField] float _speedMultiplier = 2f;
 
+    [SerializeField] AudioClip _laserClip;
+    AudioSource _audioSource;
+
     bool _isTrippleShotEnabled;
     int _score;
     SpawnManager _spawnManager;
@@ -21,6 +24,15 @@ public class Player : MonoBehaviour
         transform.position = Vector3.zero;
         _spawnManager = FindObjectOfType<SpawnManager>();
         _uiManager = FindObjectOfType<UiManager>();
+        _audioSource = AddAudioSourceComponent();
+    }
+
+    AudioSource AddAudioSourceComponent()
+    {
+        var audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.loop = false;
+        audioSource.clip = _laserClip;
+        return audioSource;
     }
 
     void Update()
@@ -54,10 +66,14 @@ public class Player : MonoBehaviour
         if (_isTrippleShotEnabled)
         {
             Instantiate(_multiLeaser, transform.position, Quaternion.identity);
+            PlayLaserFiredAudio();
             return;
         }
         Instantiate(_leaser, pos, Quaternion.identity);
+        PlayLaserFiredAudio();
     }
+
+    void PlayLaserFiredAudio() => _audioSource.Play();
 
     public void DamageTaken()
     {
